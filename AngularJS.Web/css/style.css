@@ -1,0 +1,11 @@
+﻿body {
+    padding-top: 100px;
+}
+
+#receipt {
+    display: none;
+}
+
+#receiptPanel {
+    min-width: 300px;
+}

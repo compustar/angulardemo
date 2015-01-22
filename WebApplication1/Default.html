@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Shopping Cart</title>
+    <style type="text/css">
+        .style1
+        {
+            width: 100px;
+        }
+    </style>
+    <script type="text/javascript" src="scripts/jquery-2.1.3.js"></script>
+    <script type="text/javascript">
+
+        var cart = [];
+        var prices = {};
+
+        Array.prototype.remove = function (v) { this.splice(this.indexOf(v) == -1 ? this.length : this.indexOf(v), 1); }
+
+        $(document).ready(function () {
+            $("#tblSubmission").hide();
+
+            $.ajax({ url: "CartService.svc/items" })
+                .done(function (data) {
+                    $.each(data, function (key, value) {
+                        $('#ddlItem').append($("<option></option>")
+                                  .attr("value", value.Name)
+                                  .text(value.Name));
+                        prices[value.Name] = value.Price;
+                    });
+                });
+
+            $("#btnAdd").click(function () {
+                var item = $("#ddlItem option:selected").text();
+                cart.push(item);
+                $("#cart").html(cart.join(", "));
+            });
+
+            $("#btnRemove").click(function () {
+                var item = $("#ddlItem option:selected").text();
+                cart.remove(item);
+
+                $("#cart").html(cart.join(", "));
+            });
+
+            $("#btnCheckout").click(function () {
+                $.ajax({ url: "CartService.svc/checkout",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(cart)
+                }).done(function (data) {
+                    $("#tblSubmissionForm").hide();
+                    $("#tblSubmission").show();
+
+                    var buffer = [];
+                    for (var i = 0; i < cart.length; i++) {
+                        buffer.push(cart[i] + " " + prices[cart[i]]);
+                    }
+
+                    buffer.push("Subtotal: " + data.SubTotal);
+
+                    var offers = data.Offers;
+                    if (offers.length > 0) {
+                        for (var i = 0; i < offers.length; i++) {
+                            buffer.push(offers[i].Name + ": -" + offers[i].Amount);
+                        }
+                    }
+                    else {
+                        buffer.push("(No offers available)");
+                    }
+
+                    buffer.push("Total: " + data.Total);
+
+                    $("#receipt").html(buffer.join("<br/>"));
+                });
+            });
+
+        }); 
+    </script>
+</head>
+<body>
+    <form>
+        <h1>Shopping Cart</h1>
+        <table style="width:100%;" id="tblSubmissionForm">
+            <tr>
+                <td class="style1">
+                    Item</td>
+                <td>
+                    <select id="ddlItem">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="style1">
+                    Cart</td>
+                <td>
+                    <div id="cart"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="style1">&nbsp;</td>
+                <td>
+                    <input type="button" id="btnAdd" value="Add" />
+                    <input type="button" id="btnRemove" value="Remove" />
+                    <input type="button" id="btnCheckout" value="Checkout" />
+                </td>
+            </tr>
+        </table>
+
+        <table style="width:100%;" id="tblSubmission" >
+            <tr>
+                <td class="style1">
+                    Receipt </td>
+                <td>
+                    <div id="receipt"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

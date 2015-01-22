@@ -1,0 +1,22 @@
+﻿<ul class="list-group">
+  <li ng-repeat="item in cart track by $index" class="list-group-item">
+    <span class="badge">{{ prices[item] | currency }}</span>
+    {{ item }}
+  </li>
+</ul>
+
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge">{{ result.SubTotal | currency }}</span>
+    Subtotal
+  </li>
+  <li ng-repeat="offer in result.Offers" class="list-group-item">
+    <span class="badge">-{{ offer.Amount | currency }}</span>
+    {{ offer.Name }}
+  </li>
+  <li ng-show="result.Offers == 0" class="list-group-item">(No offers available)</li>
+  <li class="list-group-item">
+    <span class="badge">{{ result.Total | currency }}</span>
+    Total
+  </li>
+</ul>

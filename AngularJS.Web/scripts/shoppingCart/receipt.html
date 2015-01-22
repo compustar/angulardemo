@@ -1,0 +1,11 @@
+﻿<table>
+<tr ng-repeat="item in cart track by $index">
+    <td>{{ item }}</td>
+    <td>{{ prices[item] | currency }}</td>
+</tr>
+</table>
+<hr size="1" />
+Subtotal: {{ result.SubTotal | currency }} <br />
+<div ng-repeat="offer in result.Offers">{{ offer.Name }} -{{ offer.Amount | currency }}</div>
+<div ng-show="result.Offers == 0">(No offers available)</div>
+Total: {{ result.Total | currency }}

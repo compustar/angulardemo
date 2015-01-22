@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{78E18180-15D1-4EEC-BEBA-F794F4791B88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCart", "ShoppingCart\ShoppingCart.csproj", "{DDC34E71-4B67-46E7-BFCD-29E86BA75A84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularJS.Test", "AngularJS.Test\AngularJS.Test.csproj", "{6161AFF3-FA39-4E96-8EC1-108099FF2B0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularJS.Web", "AngularJS.Web\AngularJS.Web.csproj", "{39415737-79B6-4501-97F4-6F7DCD6CDB58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78E18180-15D1-4EEC-BEBA-F794F4791B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E18180-15D1-4EEC-BEBA-F794F4791B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E18180-15D1-4EEC-BEBA-F794F4791B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E18180-15D1-4EEC-BEBA-F794F4791B88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC34E71-4B67-46E7-BFCD-29E86BA75A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC34E71-4B67-46E7-BFCD-29E86BA75A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC34E71-4B67-46E7-BFCD-29E86BA75A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC34E71-4B67-46E7-BFCD-29E86BA75A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6161AFF3-FA39-4E96-8EC1-108099FF2B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6161AFF3-FA39-4E96-8EC1-108099FF2B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6161AFF3-FA39-4E96-8EC1-108099FF2B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6161AFF3-FA39-4E96-8EC1-108099FF2B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39415737-79B6-4501-97F4-6F7DCD6CDB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39415737-79B6-4501-97F4-6F7DCD6CDB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39415737-79B6-4501-97F4-6F7DCD6CDB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39415737-79B6-4501-97F4-6F7DCD6CDB58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

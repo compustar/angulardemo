@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Shopping Cart</title>
+    <style type="text/css">
+        .style1
+        {
+            width: 100px;
+        }
+    </style>
+
+    <script src="scripts/angular.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        Array.prototype.remove = function (v) { this.splice(this.indexOf(v) == -1 ? this.length : this.indexOf(v), 1); }
+
+        var phonecatApp = angular.module('cartApp', []);
+
+        phonecatApp.controller('cartController', function ($scope, $http) {
+            $scope.selectedItem = "";
+            $scope.cart = [];
+            $scope.prices = {};
+            $scope.items = [];
+            $scope.checkedOut = false;
+
+            $http.get('CartService.svc/items').success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $scope.items.push(data[i].Name);
+                    $scope.prices[data[i].Name] = data[i].Price;
+                }
+            });
+
+            $scope.add = function () {
+                $scope.cart.push($scope.selectedItem);
+            }
+
+            $scope.remove = function () {
+                $scope.cart.remove($scope.selectedItem);
+            }
+
+            $scope.checkout = function () {
+                $scope.checkedOut = true;
+                $http.post("CartService.svc/checkout", $scope.cart).success(function (data) {
+                    $scope.result = data;
+                });
+            }
+        });
+
+        //$(document).ready(function () {
+
+        /*
+            $("#tblSubmission").hide();
+
+            $.ajax({ url: "CartService.svc/items" })
+                .done(function (data) {
+                    $.each(data, function (key, value) {
+                        $('#ddlItem').append($("<option></option>")
+                                  .attr("value", value.Name)
+                                  .text(value.Name));
+                        prices[value.Name] = value.Price;
+                    });
+                });
+
+            $("#btnAdd").click(function () {
+                var item = $("#ddlItem option:selected").text();
+                cart.push(item);
+                $("#cart").html(cart.join(", "));
+            });
+
+            $("#btnRemove").click(function () {
+                var item = $("#ddlItem option:selected").text();
+                cart.remove(item);
+
+                $("#cart").html(cart.join(", "));
+            });
+
+            $("#btnCheckout").click(function () {
+                $.ajax({ url: "CartService.svc/checkout",
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(cart)
+                }).done(function (data) {
+                    $("#tblSubmissionForm").hide();
+                    $("#tblSubmission").show();
+
+                    var buffer = [];
+                    for (var i = 0; i < cart.length; i++) {
+                        buffer.push(cart[i] + " " + prices[cart[i]]);
+                    }
+
+                    buffer.push("Subtotal: " + data.SubTotal);
+
+                    var offers = data.Offers;
+                    if (offers.length > 0) {
+                        for (var i = 0; i < offers.length; i++) {
+                            buffer.push(offers[i].Name + ": -" + offers[i].Amount);
+                        }
+                    }
+                    else {
+                        buffer.push("(No offers available)");
+                    }
+
+                    buffer.push("Total: " + data.Total);
+
+                    $("#receipt").html(buffer.join("<br/>"));
+                });
+            });
+            */
+        //}); 
+    </script>
+</head>
+<body ng-app="cartApp" ng-controller="cartController">
+    <form>
+        <h1>Shopping Cart</h1>
+        <table style="width:100%;" id="tblSubmissionForm" ng-hide="checkedOut">
+            <tr>
+                <td class="style1">
+                    Item</td>
+                <td>
+                    <select id="ddlItem" ng-model="selectedItem">
+                        <option ng-repeat="item in items">{{ item }}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="style1">
+                    Cart</td>
+                <td>
+                    {{ cart.join(", ") }}
+                    <!--
+                    <div id="cart"/>
+                    -->
+                </td>
+            </tr>
+            <tr>
+                <td class="style1">&nbsp;</td>
+                <td>
+                    <input type="button" id="btnAdd" value="Add" ng-click="add()" />
+                    <input type="button" id="btnRemove" value="Remove" ng-click="remove()" />
+                    <input type="button" id="btnCheckout" value="Checkout" ng-click="checkout()" />
+                </td>
+            </tr>
+        </table>
+
+        <table style="width:100%;" id="tblSubmission" ng-show="checkedOut" >
+            <tr>
+                <td class="style1">
+                    Receipt </td>
+                <td>
+                    <div ng-repeat="item in cart track by $index">{{ item }} {{ prices[item] }}</div>
+                    <div>Subtotal: {{ result.SubTotal }} </div>
+                    <div ng-repeat="offer in result.Offers">{{ offer.Name }} -{{ offer.Amount }}</div>
+                    <div ng-show="result.Offers == 0">(No offers available)</div>
+                    <div>Total: {{ result.Total }}</div>
+                    <!--
+                    <div id="receipt"/>
+                    -->
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
